@@ -1,0 +1,16 @@
+{
+    "connection": {
+        "host": "192.168.77.254",
+        "port": 1883,
+        "username": "hkfuertes",
+        "password": "gorilafeliz"
+    },
+    "topic": "zigbee2mqtt/IKA_5BUTTONS",
+    "keys": {
+        "brightness_up_click": "media_volume_up",
+        "toggle": "media_play_pause",
+        "brightness_down_click": "media_volume_down",
+        "arrow_left_click": "media_previous",
+        "arrow_right_click": "media_next"
+    }
+}
