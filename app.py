@@ -10,7 +10,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     key_pressed = json.loads(msg.payload)['action']
-    if (key_pressed != ""):
+    if (key_pressed != "" and (key_pressed in config['keys'])):
         print(key_pressed + " --> " + config['keys'][key_pressed])
         keyboard.press(Key[config['keys'][key_pressed]])
         keyboard.release(Key[config['keys'][key_pressed]])
