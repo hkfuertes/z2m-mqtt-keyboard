@@ -5,12 +5,18 @@
         "username": "",
         "password": ""
     },
-    "topic": "zigbee2mqtt/IKA_5BUTTONS",
-    "keys": {
-        "brightness_up_click": "media_volume_up",
-        "toggle": "media_play_pause",
-        "brightness_down_click": "media_volume_down",
-        "arrow_left_click": "media_previous",
-        "arrow_right_click": "media_next"
+    "devices": {
+        "IKEA_RODRET": {
+            "on": "media_volume_up",
+            "off": "media_volume_down",
+            "brightness_move_up": "media_volume_mute",
+            "brightness_move_down": "media_play_pause"
+        },
+        "IKEA_5BUTTONS": {
+            "toggle": "media_play_pause",
+            "brightness_down_click": "media_volume_down",
+            "brightness_up_click": "media_volume_up"
+        }
     }
+
 }

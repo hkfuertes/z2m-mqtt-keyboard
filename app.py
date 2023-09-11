@@ -1,19 +1,35 @@
 import paho.mqtt.client as mqtt
 from pynput.keyboard import Key, Controller
 import json, os
+DEBUG=True
+TOPIC='zigbee2mqtt/+/action'
 
 #########################################################################
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-    client.subscribe(config['topic'])
-    print("Subscribed to " + config['topic'])
+    printc("[+] Connected with result code "+str(rc))
+    client.subscribe(TOPIC)
+    printc("[+] Subscribed to " + TOPIC)
 
 def on_message(client, userdata, msg):
-    key_pressed = json.loads(msg.payload)['action']
-    if (key_pressed != "" and (key_pressed in config['keys'])):
-        print(key_pressed + " --> " + config['keys'][key_pressed])
-        keyboard.press(Key[config['keys'][key_pressed]])
-        keyboard.release(Key[config['keys'][key_pressed]])
+    _, device, _ = msg.topic.split('/')
+    if ((device in config['devices'])):
+        action = msg.payload.decode()
+        if (action in config['devices'][device]):
+            print_message(device, action)
+            keyboard.press(Key[config['devices'][device][action]])
+            keyboard.release(Key[config['devices'][device][action]])
+        else:
+            print_unmapped(device, action)
+
+def print_message(device, action):
+    printc("[+] "+device+": "+action+" --> "+config['devices'][device][action])
+
+def print_unmapped(device, action):
+    printc("[!] "+device+": "+action+" is unmapped!")
+
+def printc(s):
+    if(DEBUG):
+        print(s)
 #########################################################################
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + '/'
