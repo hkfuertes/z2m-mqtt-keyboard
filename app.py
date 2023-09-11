@@ -15,14 +15,30 @@ def on_message(client, userdata, msg):
     if ((device in config['devices'])):
         action = msg.payload.decode()
         if (action in config['devices'][device]):
-            print_message(device, action)
-            keyboard.press(Key[config['devices'][device][action]])
-            keyboard.release(Key[config['devices'][device][action]])
+            to_stroke = config['devices'][device][action]
+            if(isArray(to_stroke)):
+                print_message(device, action, to_stroke)
+                with keyboard.pressed(*list(map(lambda k: Key[k], to_stroke[:-1]))):
+                    press_key(to_stroke[-1])
+            else:
+                print_message(device, action, to_stroke)
+                press_key(to_stroke)
         else:
             print_unmapped(device, action)
 
-def print_message(device, action):
-    printc("[+] "+device+": "+action+" --> "+config['devices'][device][action])
+def press_key(key_name):
+    if(key_name in Key.__members__):
+        key = Key[key_name]
+    else:
+        key = key_name
+    keyboard.press(key)
+    keyboard.release(key)
+
+def isArray(var):
+    return isinstance(var, (list, tuple))
+
+def print_message(device, action, to_stroke):
+    printc("[+] "+device+": "+action+" --> " + str(to_stroke))
 
 def print_unmapped(device, action):
     printc("[!] "+device+": "+action+" is unmapped!")
