@@ -2,7 +2,7 @@
 Simple script that connects to the mqtt topic of z2m and listens for actions and converts them to key strokes.
 
 ## Example config file
-You can look for the special characters list [here](https://github.com/moses-palmer/pynput/blob/master/lib/pynput/keyboard/_base.py). The `devices` keys have to mach the names in zigbee2mqtt. If an action is not mapped, the terminal will reply the name of the action so that it can be mapped.
+You can look for the special characters list [here](https://github.com/moses-palmer/pynput/blob/master/lib/pynput/keyboard/_base.py). The `devices` keys (the names) have to mach the names in zigbee2mqtt. If an action is not mapped, the terminal will reply the name of the action so that it can be mapped.
 
 ```jsonc
 {
